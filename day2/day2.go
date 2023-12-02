@@ -13,21 +13,20 @@ func Run() {
 		games = append(games, GameFromLine(line))
 	}
 
-	minRed := 12
-	minBlue := 14
-	minGreen := 13
-
 	sum := 0
 
-outer:
 	for _, game := range games {
+		minRed := 0
+		minBlue := 0
+		minGreen := 0
+
 		for _, move := range game.Moves {
-			if move.Red > minRed || move.Blue > minBlue || move.Green > minGreen {
-				continue outer
-			}
+			minRed = max(move.Red, minRed)
+			minBlue = max(move.Blue, minBlue)
+			minGreen = max(move.Green, minGreen)
 		}
 
-		sum += game.Id
+		sum += minRed * minBlue * minGreen
 	}
 
 	println(sum)
