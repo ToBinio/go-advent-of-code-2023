@@ -2,10 +2,11 @@ package day2
 
 import (
 	"advent-of-code-2023/io"
+	"fmt"
 )
 
 func Run() {
-	lines := io.ReadLines("resources/day2/input.txt")
+	lines := io.ReadLines("resources/day2/input.txt.txt")
 
 	var games []Game
 
@@ -29,5 +30,6 @@ func Run() {
 		sum += minRed * minBlue * minGreen
 	}
 
+	fmt.Printf("%+v\n", games)
 	println(sum)
 }

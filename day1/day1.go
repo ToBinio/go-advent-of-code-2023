@@ -12,7 +12,7 @@ func Run() {
 
 	numbers := []string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
 
-	file, err := os.Open("resources/day1/input.txt")
+	file, err := os.Open("resources/day1/input.txt.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
