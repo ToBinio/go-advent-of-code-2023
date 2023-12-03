@@ -9,7 +9,7 @@ import (
 func Run() {
 	lines := io.ReadLines("resources/day3/input.txt")
 
-	var symbols []Symbol
+	var gears []GearSymbol
 	var serialNumbers []SerialNumber
 
 	for y, line := range lines {
@@ -39,14 +39,12 @@ func Run() {
 
 			tryAddSerial(x)
 
-			if char == '.' {
-				continue
+			if char == '*' {
+				gears = append(gears, GearSymbol{
+					x: x,
+					y: y,
+				})
 			}
-
-			symbols = append(symbols, Symbol{
-				x: x,
-				y: y,
-			})
 		}
 
 		tryAddSerial(len(line) - 1)
@@ -54,10 +52,8 @@ func Run() {
 
 	sum := 0
 
-	for _, number := range serialNumbers {
-		if isSerialNumber(number, symbols) {
-			sum += number.value
-		}
+	for _, gear := range gears {
+		sum += getRatio(gear, serialNumbers)
 	}
 
 	println(sum)
@@ -70,27 +66,32 @@ type SerialNumber struct {
 	length int
 }
 
-type Symbol struct {
+type GearSymbol struct {
 	x int
 	y int
 }
 
-func isSerialNumber(number SerialNumber, symbols []Symbol) bool {
-	startX := number.startX - 1
-	endX := number.startX + number.length
+func getRatio(gear GearSymbol, numbers []SerialNumber) int {
 
-	startY := number.startY - 1
-	endY := number.startY + 1
+	var adjacent []SerialNumber
 
-	for x := startX; x <= endX; x++ {
-		for y := startY; y <= endY; y++ {
-			for _, symbol := range symbols {
-				if symbol.x == x && symbol.y == y {
-					return true
+number:
+	for _, number := range numbers {
+		for x := number.startX; x <= number.startX+number.length-1; x++ {
+			for gearX := gear.x - 1; gearX <= gear.x+1; gearX++ {
+				for gearY := gear.y - 1; gearY <= gear.y+1; gearY++ {
+					if x == gearX && number.startY == gearY {
+						adjacent = append(adjacent, number)
+						continue number
+					}
 				}
 			}
 		}
 	}
 
-	return false
+	if len(adjacent) != 2 {
+		return 0
+	}
+
+	return adjacent[0].value * adjacent[1].value
 }
