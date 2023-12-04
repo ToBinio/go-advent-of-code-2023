@@ -18,13 +18,24 @@ func Run() {
 		games = append(games, Game{
 			winning: lineToNumbers(values[0]),
 			having:  lineToNumbers(values[1]),
+			count:   1,
 		})
+	}
+
+	for index, game := range games {
+		if game.count <= 0 {
+			break
+		}
+
+		for i := 0; i < getGameWinCount(game); i++ {
+			games[index+1+i].count += game.count
+		}
 	}
 
 	sum := 0
 
 	for _, game := range games {
-		sum += getGameValue(game)
+		sum += game.count
 	}
 
 	println(sum)
@@ -33,25 +44,22 @@ func Run() {
 type Game struct {
 	winning []int
 	having  []int
+	count   int
 }
 
-func getGameValue(game Game) int {
+func getGameWinCount(game Game) int {
 
-	value := 0
+	count := 0
 
 	for _, have := range game.having {
 		for _, win := range game.winning {
 			if have == win {
-				if value == 0 {
-					value = 1
-				} else {
-					value *= 2
-				}
+				count++
 			}
 		}
 	}
 
-	return value
+	return count
 }
 
 func lineToNumbers(line string) []int {
