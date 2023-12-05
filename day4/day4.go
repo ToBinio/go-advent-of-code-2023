@@ -2,7 +2,6 @@ package day4
 
 import (
 	"advent-of-code-2023/io"
-	"strconv"
 	"strings"
 )
 
@@ -16,8 +15,8 @@ func Run() {
 		values := strings.Split(game, "|")
 
 		games = append(games, Game{
-			winning: lineToNumbers(values[0]),
-			having:  lineToNumbers(values[1]),
+			winning: io.LineToNumbers(values[0]),
+			having:  io.LineToNumbers(values[1]),
 			count:   1,
 		})
 	}
@@ -60,22 +59,4 @@ func getGameWinCount(game Game) int {
 	}
 
 	return count
-}
-
-func lineToNumbers(line string) []int {
-	split := strings.Split(strings.Trim(line, " "), " ")
-
-	var numbers []int
-
-	for _, val := range split {
-		if val == "" {
-			continue
-		}
-
-		number, _ := strconv.Atoi(val)
-
-		numbers = append(numbers, number)
-	}
-
-	return numbers
 }
