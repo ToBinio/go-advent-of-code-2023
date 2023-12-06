@@ -10,7 +10,7 @@ import (
 
 func Run() {
 
-	lines := io.ReadLines("resources/day5/input.txt")
+	lines := io.ReadLines("resources/day5/input.txt.txt")
 
 	var seeds []Range
 	var convertedSeeds []Range
