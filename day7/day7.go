@@ -51,7 +51,7 @@ func HandFromLine(line string) Hand {
 
 	return Hand{
 		cards: split[0],
-		level: determineHandLevel(split[0]),
+		level: determineHandLevel(maximiseHand(split[0])),
 		bit:   bit,
 	}
 }
@@ -121,7 +121,7 @@ func determineHandLevel(cards string) HandLevel {
 	return High
 }
 
-var CardType = []rune{'A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2'}
+var CardType = []rune{'A', 'K', 'Q', 'T', '9', '8', '7', '6', '5', '4', '3', '2', 'J'}
 
 func determineCardLevel(card rune) int {
 	for i, r := range CardType {
