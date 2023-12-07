@@ -7,7 +7,7 @@ import (
 )
 
 func Run() {
-	lines := io.ReadLines("resources/day3/input.txt.txt")
+	lines := io.ReadLines("resources/day3/input.txt")
 
 	var gears []GearSymbol
 	var serialNumbers []SerialNumber
