@@ -2,6 +2,7 @@ package day8
 
 import (
 	"advent-of-code-2023/io"
+	"fmt"
 	"strings"
 )
 
@@ -21,28 +22,37 @@ func Run() {
 		}
 	}
 
-	current := "AAA"
-	steps := 0
+	startLocations := getStartingLocations(locations)
 
-outer:
-	for {
-		for _, move := range moves {
-			switch move {
-			case 'L':
-				current = locations[current].left
-			case 'R':
-				current = locations[current].right
-			}
+	fmt.Println(locations)
 
-			steps++
+	var steps []int
 
-			if current == "ZZZ" {
-				break outer
+	for _, baseCurrent := range startLocations {
+		stepCount := 0
+		current := baseCurrent
+	outer:
+		for {
+			for _, move := range moves {
+				switch move {
+				case 'L':
+					current = locations[current].left
+				case 'R':
+					current = locations[current].right
+				}
+
+				stepCount++
+
+				if strings.HasSuffix(current, "Z") {
+					break outer
+				}
 			}
 		}
+
+		steps = append(steps, stepCount)
 	}
 
-	println(steps)
+	fmt.Println(LCM(steps[0], steps[1], steps...))
 }
 
 type Location struct {
@@ -70,4 +80,36 @@ func parseMoves(line string, moves []rune) []rune {
 	}
 
 	return moves
+}
+
+func getStartingLocations(locations map[string]Location) []string {
+
+	var startLocations []string
+
+	for location := range locations {
+		if strings.HasSuffix(location, "A") {
+			startLocations = append(startLocations, location)
+		}
+	}
+
+	return startLocations
+}
+
+func GCD(a, b int) int {
+	for b != 0 {
+		t := b
+		b = a % b
+		a = t
+	}
+	return a
+}
+
+func LCM(a, b int, integers ...int) int {
+	result := a * b / GCD(a, b)
+
+	for i := 0; i < len(integers); i++ {
+		result = LCM(result, integers[i])
+	}
+
+	return result
 }
