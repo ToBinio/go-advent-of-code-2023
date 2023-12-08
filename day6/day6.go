@@ -6,7 +6,7 @@ import (
 )
 
 func Run() {
-	lines := io.ReadLines("resources/day6/input.txt")
+	lines := io.ReadLines("resources/day6/input.txt.txt")
 
 	times := io.LineToNumbers(strings.Split(lines[0], ":")[1])
 	distances := io.LineToNumbers(strings.Split(lines[1], ":")[1])

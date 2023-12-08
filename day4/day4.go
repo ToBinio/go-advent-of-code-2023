@@ -6,7 +6,7 @@ import (
 )
 
 func Run() {
-	lines := io.ReadLines("resources/day4/input.txt.txt")
+	lines := io.ReadLines("resources/day4/input.txt.txt.txt")
 
 	var games []Game
 

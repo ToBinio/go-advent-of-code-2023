@@ -9,7 +9,7 @@ import (
 )
 
 func Run() {
-	lines := io.ReadLines("resources/day7/input.txt")
+	lines := io.ReadLines("resources/day7/input.txt.txt")
 
 	var hands []Hand
 
