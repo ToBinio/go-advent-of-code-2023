@@ -26,7 +26,7 @@ func getPrediction(line string) int {
 
 	for i := len(numbers) - 2; i >= 0; i-- {
 		values := numbers[i]
-		prediction = values[len(values)-1] + prediction
+		prediction = values[0] - prediction
 	}
 
 	return prediction
