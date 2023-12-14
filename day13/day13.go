@@ -40,13 +40,13 @@ type Note struct {
 
 func getMirrorValue(note Note) int {
 	for i := 0; i < len(note.data)-1; i++ {
-		if isMirroredHorizontal(note, i) {
+		if isMirroredHorizontal(note, i) == 1 {
 			return (i + 1) * 100
 		}
 	}
 
 	for i := 0; i < len(note.data[0])-1; i++ {
-		if isMirroredVertically(note, i) {
+		if isMirroredVertically(note, i) == 1 {
 			return i + 1
 		}
 	}
@@ -54,7 +54,9 @@ func getMirrorValue(note Note) int {
 	return 0
 }
 
-func isMirroredVertically(note Note, index int) bool {
+func isMirroredVertically(note Note, index int) int {
+	errors := 0
+
 	for i := 0; i <= index; i++ {
 		left := index - i
 		right := index + i + 1
@@ -65,15 +67,17 @@ func isMirroredVertically(note Note, index int) bool {
 
 		for _, line := range note.data {
 			if line[left] != line[right] {
-				return false
+				errors++
 			}
 		}
 	}
 
-	return true
+	return errors
 }
 
-func isMirroredHorizontal(note Note, index int) bool {
+func isMirroredHorizontal(note Note, index int) int {
+	errors := 0
+
 	for i := 0; i <= index; i++ {
 		left := index - i
 		right := index + i + 1
@@ -84,10 +88,10 @@ func isMirroredHorizontal(note Note, index int) bool {
 
 		for column := 0; column < len(note.data[0]); column++ {
 			if note.data[left][column] != note.data[right][column] {
-				return false
+				errors++
 			}
 		}
 	}
 
-	return true
+	return errors
 }
